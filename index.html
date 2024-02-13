@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Users</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+    ></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+      <h1 class="text-center text-white p-5">Users</h1>
+      <label
+        class="form-control text-center bg-dark"
+        style="border: none"
+      ></label>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#add"
+        >
+          ADD +
+        </button>
+      </div>
+      <div class="container">
+        <div class="table-wrapper">
+          <table
+            class="table table-dark table-hover table-striped"
+            style="text-align: center"
+          >
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Region</th>
+                <th scope="col">Birthdate</th>
+                <th scope="col">Position</th>
+                <th scope="col">Position type</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Married</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="add"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="addLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content" style="background: #adb5bd">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="addLabel">ADD</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              class="needs-validation"
+              target="transFrame"
+              method="post"
+              action="javascript:void(0);"
+              id="add-form"
+              onsubmit="return createUser(); return false;"
+              novalidate
+            >
+              <div class="mb-3">
+                <div class="form-floating mt-2">
+                  <input
+                    type="text"
+                    name="firstName"
+                    class="form-control"
+                    id="firstName"
+                    aria-describedby="firstName-label"
+                  />
+                  <label class="text-dark" id="firstName-label"
+                    >First name:</label
+                  >
+                </div>
+                <div class="form-floating mt-2">
+                  <input
+                    type="text"
+                    name="lastName"
+                    class="form-control"
+                    id="lastName"
+                    aria-describedby="lastName-label"
+                  />
+                  <label class="text-dark" id="lastName-label"
+                    >Last name:</label
+                  >
+                </div>
+                <div class="mt-2 form-floating">
+                  <select class="form-select" id="region" name="region">
+                    <option value="Bukhara">Bukhara</option>
+                    <option value="Samarkand">Samarkand</option>
+                    <option value="Tashkent">Tashkent</option>
+                    <option value="Fergana">Fergana</option>
+                  </select>
+                  <label class="text-dark" for="region">Choose region:</label>
+                </div>
+                <div class="input-group">
+                  <div class="form-floating mt-2">
+                    <input
+                      type="date"
+                      id="birthdate"
+                      name="birthdate"
+                      class="form-control"
+                    />
+                    <label class="text-dark" for="birthdate"
+                      >Select birthdate:</label
+                    >
+                  </div>
+                  <div class="form-floating mt-2">
+                    <select class="form-select" id="position" name="position">
+                      <option value="React">React</option>
+                      <option value="Nodejs">Nodejs</option>
+                      <option value="Go">Go</option>
+                      <option value="Python">Python</option>
+                    </select>
+                    <label class="text-dark" for="position">Position</label>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <iframe
+              style="width: 0; height: 0; border: 0"
+              name="transFrame"
+              id="transFrame"
+            ></iframe>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              form="add-form"
+              type="submit"
+              class="btn btn-success"
+              id="add-button"
+              onsubmit="create();"
+            >
+              ADD
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="edit"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="editLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content" style="background: #adb5bd">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="editLabel">EDIT</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              target="transFrame"
+              method="post"
+              id="edit-form"
+              action="javascript:void(0);"
+              onsubmit="return updateUser(); return false;"
+            >
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text" id="users-edit-label"
+                    >User's new name:
+                  </span>
+                  <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    id="users-edit-name"
+                    aria-describedby="users-edit-label"
+                  />
+                </div>
+              </div>
+            </form>
+            <iframe
+              style="width: 0; height: 0; border: 0"
+              name="transFrame"
+              id="transFrame"
+            ></iframe>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              form="edit-form"
+              type="submit"
+              class="btn btn-warning"
+              id="edit-button"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="delete"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="deleteLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content" style="background: #adb5bd">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteLabel">DELETE</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form
+            target="transFrame"
+            id="delete-form"
+            method="post"
+            action="javascript:void(0)"
+            onsubmit="return deleteUser(); return false;"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+          </form>
+          <iframe
+            style="width: 0; height: 0; border: 0"
+            name="transFrame"
+            id="transFrame"
+          ></iframe>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              form="delete-form"
+              class="btn btn-danger"
+              id="delete-button"
+            >
+              DELETE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./second.js"></script>
+  </body>
+</html>
